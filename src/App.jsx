@@ -13,14 +13,28 @@ class App extends Component {
   } 
 
   componentWillMount() {
-    console.log(this.props)
     this.props.appState.getListManga()
   }
 
   componentDidMount() {
+    window.addEventListener('scroll', (e) => {
+      let el = document.getElementsByClassName("columns")[0]
+      misc.detectBottomScroll(window, el, () => {
+        this.props.appState.updateListManga()
+      })
+    })
     setTimeout(() => {
       misc.init_style()
     }, 1000)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', (e) => {
+      let el = document.getElementsByClassName("columns")[0]
+      misc.detectBottomScroll(window, el, () => {
+        this.props.appState.updateListManga() // update manga list
+      })
+    })
   }
 
   renderHeader () {
@@ -29,8 +43,10 @@ class App extends Component {
         <div className="inner">
           <div className="content">
             <h1>Mangas</h1>
-            <h2>Manga reader 
-            for everyone.</h2>
+            <h2>
+              Manga reader 
+              for everyone.
+            </h2>
             {this.props.appState.screen_loading?
               (<a href="#" style={{display: 'none'}} className="button big alt">
                 <span>let's go</span>
@@ -58,6 +74,7 @@ class App extends Component {
   }
 
   renderImages () {
+    console.log(':: render Images')
     return this.props.appState.list_manga.map((image,i) => {
         return (
           <div key={'image'+i} className="image fit">
@@ -69,30 +86,8 @@ class App extends Component {
     
   }
 
-  renderManga () {
-    return (
-      <div id="preview">
-        <div className="inner">
-          <div className="image fit">
-            <img src="images/pic05.jpg" alt="" />
-          </div>
-          <div className="content">
-            <header>
-              <h2>Aliquam gravida felis vel velit accumsan</h2>
-            </header>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec est ligula, ultrices id posuere vitae, rutrum in tellus. Suspendisse vitae aliquam metus. Cras blandit, tortor ut eleifend porttitor, urna lacus porttitor arcu, quis vestibulum metus dolor ut neque. Aenean et nisi venenatis, mollis enim eget, pharetra nunc. Sed blandit non mi nec ultrices. Vestibulum hendrerit tortor id gravida eleifend. Morbi vitae molestie odio. Etiam nec est vel sapien posuere vulputate eget eget mi. Quisque vulputate ligula velit, id accumsan dui fringilla nec. Morbi nisi mauris, placerat sit amet feugiat nec, vehicula ut ex.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec est ligula, ultrices id posuere vitae, rutrum in tellus. Suspendisse vitae aliquam metus. Cras blandit, tortor ut eleifend porttitor, urna lacus porttitor arcu, quis vestibulum metus dolor ut neque. Aenean et nisi venenatis, mollis enim eget, pharetra nunc. Sed blandit non mi nec ultrices. Vestibulum hendrerit tortor id gravida eleifend. Morbi vitae molestie odio. Etiam nec est vel sapien posuere vulputate eget eget mi. Quisque vulputate ligula velit, id accumsan dui fringilla nec. Morbi nisi mauris, placerat sit amet feugiat nec, vehicula ut ex.</p>
-          </div>
-        </div>
-        <a href="detail1.html" className="nav previous"><span className="fa fa-chevron-left"></span></a>
-        <a href="detail2.html" className="nav next"><span className="fa fa-chevron-right"></span></a>
-      </div>
-    )
-  }
-
   handleClickChapterActive (c, e) {
     e.preventDefault()
-    console.log(':: handleClickChapterActive', c)
     this.props.appState.setChapterActive(c[3])
   }
 
@@ -211,9 +206,14 @@ class App extends Component {
     )
   }
 
-  onReset = () => {
-    this.props.appState.resetTimer();
+  renderBottomMark() {
+    return (
+      <div className="bottom-mark">
+        bottom mark
+      </div>
+    )
   }
+
 };
 
 export default App;
