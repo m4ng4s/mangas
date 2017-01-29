@@ -28,6 +28,10 @@ class AppState {
     this.manga_chapter_active = ""
   }
 
+  @action restartChapter() {
+    this.manga_chapter_active = ""
+  }
+
   @action setChapterActive (chapter) {
     this.manga_chapter_active = chapter || ""
   }

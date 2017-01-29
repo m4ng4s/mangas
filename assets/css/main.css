@@ -1326,7 +1326,7 @@
 
 			#header.hide .button.hidden, #header.preview .button.hidden {
 				text-decoration: none;
-				padding-top: 1.5em;
+				/*padding-top: 1.5em;*/
 				padding-left: 0;
 				padding-right: 0;
 				background: none;
@@ -1343,7 +1343,8 @@
 				}
 
 				#header.hide .button.hidden:before, #header.preview .button.hidden:before {
-					content: '\f015';
+					/*content: '\f015';*/
+					content: '\f107';
 					color: #FFF;
 					font-size: 1.5em;
 				}

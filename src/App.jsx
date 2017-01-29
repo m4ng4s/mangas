@@ -49,15 +49,32 @@ class App extends Component {
               Manga reader 
               for everyone.
             </h2>
+
+            {(this.props.appState.screen_loading || !this.props.appState.manga_detail_id || (this.props.appState.manga_detail_id && !this.props.appState.manga_chapter_active))?
+              (<a href="#" style={{display: 'none'}} className="button big alt">
+                <span>Go To Chapter Page</span>
+              </a>): 
+              (<a href="#" style={{marginBottom: '5px'}} onClick={this.handleClickChapterRestart.bind(this)} className="button big alt">
+                <span>Go To Chapter Page</span>
+              </a>)}
+            <br/>
             {this.props.appState.screen_loading?
               (<a href="#" style={{display: 'none'}} className="button big alt">
-                <span>let's go</span>
+                <span>Go To List</span>
               </a>): 
-              (<a href="#" className="button big alt">
-                <span>let's go</span>
-              </a>)}
+              (<a href="#" onClick={this.handleClickRestart.bind(this)} className="button big alt">
+                <span>Go To List</span>
+              </a>)}  
+              <br/>
+            {(this.props.appState.screen_loading || !this.props.appState.manga_detail_id)?
+              (<a href="#" style={{display: 'none'}} className="button big alt">
+                <span>Resume</span>
+              </a>): 
+              (<a href="#" style={{marginTop: '5px'}} className="button big alt">
+                <span>Resume</span>
+              </a>)}          
           </div>
-          <a onClick={this.handleClickRestart.bind(this)} href="#" className="button hidden">
+          <a href="#" className="button hidden">
             <span>let's go</span>
           </a>
         </div>
@@ -65,8 +82,11 @@ class App extends Component {
     )
   }
 
+  handleClickChapterRestart(e) {
+    this.props.appState.restartChapter()
+  }
+
   handleClickRestart (e) {
-    e.preventDefault()
     this.props.appState.restartApp()
   }
 
@@ -78,7 +98,6 @@ class App extends Component {
   handleErrorCover (index) {
     console.log('handle error cover', index)
     this.props.appState.changeMangaCover(index)
-    // this.props.appState.changeMangaCover()
   }
 
   renderImages () {
