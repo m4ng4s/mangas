@@ -27,6 +27,12 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ]
+      }
+    ],
     loaders: [{
       test: /\.jsx?$/,
       loaders: ['babel'],
@@ -35,6 +41,9 @@ module.exports = {
       test: /\.js?$/,
       loaders: ['babel'],
       include: path.join(__dirname, 'lib')
+    },{
+      test: /\.(css)$/,
+      loader: 'style!css'
     }]
   }
 };

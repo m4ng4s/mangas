@@ -88,6 +88,10 @@ class AppState {
         })
   }
 
+  @action changeMangaCover (i) {
+    this.list_manga[i].url_cover = 'images/placeholder.gif'
+  }
+
   @action getDetailManga (manga) {
     this.screen_loading = true
     let id = manga.id

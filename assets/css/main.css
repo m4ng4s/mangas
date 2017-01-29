@@ -713,6 +713,7 @@
 			display: block;
 			margin: 0 0 2em 0;
 			width: 100%;
+			min-height: 300px;
 		}
 
 			.image.fit img {
@@ -1008,7 +1009,7 @@
 			position: fixed;
 			height: 2em;
 			width: 2em;
-			background: #fff;
+			/*background: #fff;*/
 			border-radius: 100%;
 			line-height: 2em;
 			top: 50%;
@@ -1017,8 +1018,9 @@
 			z-index: 10003;
 		}
 
-			#preview .nav:hover {
+			#preview .nav span:hover {
 				background: #FFF;
+				color: yellow;
 			}
 
 			#preview .nav.previous {

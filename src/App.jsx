@@ -4,6 +4,7 @@ import DevTools from 'mobx-react-devtools';
 import * as misc from './../lib/misc';
 
 import Reader from './Reader';
+import Spotlight from './Spotlight';
 
 @observer
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
   componentDidMount() {
     window.addEventListener('scroll', (e) => {
       let el = document.getElementsByClassName("columns")[0]
+      if(el) 
       misc.detectBottomScroll(window, el, () => {
         this.props.appState.updateListManga()
       })
@@ -73,13 +75,23 @@ class App extends Component {
     this.props.appState.getDetailManga(manga)
   }
 
+  handleErrorCover (index) {
+    console.log('handle error cover', index)
+    this.props.appState.changeMangaCover(index)
+    // this.props.appState.changeMangaCover()
+  }
+
   renderImages () {
     console.log(':: render Images')
     return this.props.appState.list_manga.map((image,i) => {
         return (
           <div key={'image'+i} className="image fit">
             <span style={{fontSize: '12pt'}}>{image.name}</span>
-            <a href="#" onClick={this.handleClickDetail.bind(this, image)}><img src={image.url_cover} alt="" /></a>
+            <a href="#" onClick={this.handleClickDetail.bind(this, image)}>
+              <img src={image.url_cover} onError={
+                this.handleErrorCover.bind(this, i)
+              } alt="" />
+            </a>
           </div>
         )
       })
@@ -186,6 +198,11 @@ class App extends Component {
   handleUpdateChapterPage(chapter) {
     this.props.appState.updateChapterPage(chapter)
   }
+  renderFancy () {
+    return (
+      <Spotlight />
+    )
+  }
   render () {
     let reader_mode = (this.props.appState.manga_chapter_active)? true: false  
     return (
@@ -202,18 +219,10 @@ class App extends Component {
 
         />):this.renderFront()}
         {this.renderFooter()}
+        {this.renderFancy()}
       </div>
     )
   }
-
-  renderBottomMark() {
-    return (
-      <div className="bottom-mark">
-        bottom mark
-      </div>
-    )
-  }
-
 };
 
 export default App;
